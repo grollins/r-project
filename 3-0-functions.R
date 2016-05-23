@@ -23,7 +23,7 @@ nested_group_frequency <- function (df, grouping_var1, grouping_var2) {
   return(summary_df)
 }
 
-plot_simple_bar_chart <- function (df) {
+plot_simple_bar_chart <- function (df, title) {
   plot <- ggplot(data = df, aes(x, y, label = label)) +
     geom_bar(stat = "identity") +
     geom_text(aes(y=label_position), color = "white", size = 5) +
@@ -31,12 +31,15 @@ plot_simple_bar_chart <- function (df) {
     #scale_x_continuous(breaks = 1:max(summary_df[grouping_var]), limits = c(0,4)) +
     #scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
     coord_flip() +
+    ggtitle(title) +
     labs(x = "", y = "") +
-    theme(axis.ticks = element_blank(), axis.text = element_blank())
+    theme(axis.ticks = element_blank(),
+          axis.text = element_blank(),
+          plot.title = element_text(hjust = 0, size=12, color = "grey30"))
   return(plot)
 }
 
-plot_bar_chart <- function (df) {
+plot_bar_chart <- function (df, title) {
   plot <- ggplot(data = df, aes(x, y, fill = group, label = label)) +
     geom_bar(stat = "identity", position = "dodge") +
     geom_text(aes(y=label_position), position = position_dodge(0.9),
@@ -45,10 +48,13 @@ plot_bar_chart <- function (df) {
     # scale_x_continuous(breaks = 1:2, limits = c(0,4)) +
     # scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
     coord_flip() +
+    ggtitle(title) +
     labs(x = "", y = "") +
     # scale_fill_manual(values=c("gray60", "gray60")) +
-    theme(axis.ticks = element_blank(), axis.text = element_blank(),
-          legend.position="none")
+    theme(axis.ticks = element_blank(),
+          axis.text = element_blank(),
+          legend.position="none",
+          plot.title = element_text(hjust = 0, size=12, color = "grey30"))
   return(plot)
 }
 
