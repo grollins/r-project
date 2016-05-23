@@ -23,9 +23,21 @@ nested_group_frequency <- function (df, grouping_var1, grouping_var2) {
   return(summary_df)
 }
 
-plot_bar_chart <- function (df, x, y, grouping_var, label) {
-  plot <- ggplot(data = df, aes_string(x = x, y = y, fill = grouping_var,
-                                       label = label)) +
+plot_simple_bar_chart <- function (df) {
+  plot <- ggplot(data = df, aes(x, y, label = label)) +
+    geom_bar(stat = "identity") +
+    geom_text(aes(y=label_position), color = "white", size = 5) +
+    theme_pander() +
+    #scale_x_continuous(breaks = 1:max(summary_df[grouping_var]), limits = c(0,4)) +
+    #scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+    coord_flip() +
+    labs(x = "", y = "") +
+    theme(axis.ticks = element_blank(), axis.text = element_blank())
+  return(plot)
+}
+
+plot_bar_chart <- function (df) {
+  plot <- ggplot(data = df, aes(x, y, fill = group, label = label)) +
     geom_bar(stat = "identity", position = "dodge") +
     geom_text(aes(y=label_position), position = position_dodge(0.9),
               color = "white", size = 5) +
@@ -37,7 +49,6 @@ plot_bar_chart <- function (df, x, y, grouping_var, label) {
     # scale_fill_manual(values=c("gray60", "gray60")) +
     theme(axis.ticks = element_blank(), axis.text = element_blank(),
           legend.position="none")
-
   return(plot)
 }
 
