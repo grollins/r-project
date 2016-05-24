@@ -1,5 +1,5 @@
 INPUT <- "cleaned.RData"
-OUTPUT <- "summary_data_4.RData"
+OUTPUT <- "summary_data_3.RData"
 
 load(INPUT)
 

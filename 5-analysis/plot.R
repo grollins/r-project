@@ -1,5 +1,5 @@
-INPUT <- "summary_data_5.RData"
-OUTPUT <- "plot_5.RData"
+INPUT <- "summary_data_3.RData"
+OUTPUT <- "plot_3.RData"
 
 load(INPUT)
 
