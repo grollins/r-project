@@ -8,13 +8,13 @@ Template for generic R data analysis project
 
 Each analysis chunk consists of four scripts:
 
-* i-0-functions.R
+* i-analysis/functions.R
     + supporting functions for analysis i
-* i-1-do.R
-    + analyze/summarize data
-* i-2-plot.R
-    + plot analysis
-* i-3-export.R
+* i-analysis/do.R
+    + do analysis i
+* i-analysis/plot.R
+    + plot results of analysis i
+* i-analysis/export.R
     + export plots to Powerpoint
 
 Other scripts:
