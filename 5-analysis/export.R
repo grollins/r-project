@@ -1,5 +1,5 @@
-INPUT <- "plot_3.RData"
-OUTPUT <- "output_3.pptx"
+INPUT <- "checkpoint/plot_5.RData"
+OUTPUT <- "output/output_5.pptx"
 TEMPLATE <- "<path to template>.pptx"
 
 load(INPUT)

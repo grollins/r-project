@@ -1,2 +1,2 @@
 raw <- fread(".csv")
-save(raw, file = "raw.RData")
+save(raw, file = "checkpoint/raw.RData")

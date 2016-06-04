@@ -1,4 +1,4 @@
-load("raw.RData")
+load("checkpoint/raw.RData")
 
 df <- raw %>%
   filter() %>%
@@ -15,4 +15,4 @@ df <- raw %>%
 df %<>%
   subset(!duplicated(colname))
 
-save(df, file = "cleaned.RData")
+save(df, file = "checkpoint/cleaned.RData")

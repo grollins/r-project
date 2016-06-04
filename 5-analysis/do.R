@@ -1,5 +1,5 @@
-INPUT <- "cleaned.RData"
-OUTPUT <- "summary_data_3.RData"
+INPUT <- "checkpoint/cleaned.RData"
+OUTPUT <- "checkpoint/summary_data_5.RData"
 
 load(INPUT)
 
