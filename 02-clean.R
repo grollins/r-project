@@ -1,6 +1,6 @@
 load("checkpoint/raw.RData")
 
-df <- raw %>%
+df <- raw_df %>%
   filter() %>%
   mutate()
 
@@ -13,7 +13,7 @@ df <- raw %>%
 
 # remove duplicate rows
 df %<>%
-  subset(!duplicated(colname))
+  distinct(colname, .keep_all = TRUE)
 
 save(df, file = "checkpoint/cleaned.RData")
 
