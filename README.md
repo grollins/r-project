@@ -1,15 +1,17 @@
 # r-project
 Template for generic R data analysis project
 
-* 1-load.R
+* 00-main.R
+    + driver script; makes it easy to run the other scripts
+* 01-load.R
     + load the raw data
-* 2-clean.R
+* 02-clean.R
     + clean the raw data
+* 03-functions.R
+    + supporting functions for analysis
 
 Each analysis chunk consists of four scripts:
 
-* i-analysis/functions.R
-    + supporting functions for analysis i
 * i-analysis/do.R
     + do analysis i
 * i-analysis/plot.R
@@ -19,8 +21,6 @@ Each analysis chunk consists of four scripts:
 
 Other scripts:
 
-* main.R
-    + driver script; makes it easy to run the other scripts
 * scratch.R
     + scratch area for testing things
 
