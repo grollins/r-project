@@ -1,2 +1,4 @@
 raw_df <- readr::read_csv(".csv", col_types = "illcclliiic")
-save(raw, file = "checkpoint/raw.RData")
+md <- readr::read_csv("~/Data/MaterialDesign.csv")
+
+save(raw_df, md, file = "checkpoint/raw.RData")
