@@ -4,7 +4,7 @@ group_frequency <- function (df, grouping_var) {
     summarize(N = n()) %>%
     mutate(freq = N / sum(N),
            label = paste(round(100 * N / sum(N), 0), "%", sep="")) %>%
-    mutate(label_position = ifelse((freq - 0.05) > 0, freq - 0.05, freq)) %>%
+    mutate(label_position = ifelse((freq - 0.02) > 0, freq - 0.02, freq)) %>%
     as.data.frame()
   return(summary_df)
 }
@@ -18,14 +18,14 @@ nested_group_frequency <- function (df, grouping_var1, grouping_var2) {
     group_by_(grouping_var1, add = TRUE) %>%
     mutate(freq = N / groupN,
            label = paste(round(100 * N / groupN, 0), "%", sep="")) %>%
-    mutate(label_position = ifelse((freq - 0.05) > 0, freq - 0.05, freq)) %>%
+    mutate(label_position = ifelse((freq - 0.02) > 0, freq - 0.02, freq)) %>%
     as.data.frame()
   return(summary_df)
 }
 
 plot_simple_bar_chart <- function (df, title) {
   plot <- ggplot(data = df, aes(x, y, label = label)) +
-    geom_bar(stat = "identity") +
+    geom_bar(stat = "identity", fill = md500$grey) +
     geom_text(aes(y=label_position), color = "white", size = 5) +
     theme_pander() +
     #scale_x_continuous(breaks = 1:max(summary_df[grouping_var]), limits = c(0,4)) +
@@ -35,13 +35,13 @@ plot_simple_bar_chart <- function (df, title) {
     labs(x = "", y = "") +
     theme(axis.ticks = element_blank(),
           axis.text = element_blank(),
-          plot.title = element_text(hjust = 0, size=12, color = "grey30"))
+          plot.title = element_text(hjust = 0, size=12, color = md700$grey))
   return(plot)
 }
 
 plot_bar_chart <- function (df, title) {
   plot <- ggplot(data = df, aes(x, y, fill = group, label = label)) +
-    geom_bar(stat = "identity", position = "dodge") +
+    geom_bar(stat = "identity", position = "dodge", fill = md500$grey) +
     geom_text(aes(y=label_position), position = position_dodge(0.9),
               color = "white", size = 5) +
     theme_pander() +
@@ -54,7 +54,7 @@ plot_bar_chart <- function (df, title) {
     theme(axis.ticks = element_blank(),
           axis.text = element_blank(),
           legend.position="none",
-          plot.title = element_text(hjust = 0, size=12, color = "grey30"))
+          plot.title = element_text(hjust = 0, size=12, color = md700$grey))
   return(plot)
 }
 
