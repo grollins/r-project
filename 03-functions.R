@@ -4,7 +4,7 @@ group_frequency <- function (df, grouping_var) {
     summarize(N = n()) %>%
     mutate(freq = N / sum(N),
            label = paste(round(100 * N / sum(N), 0), "%", sep="")) %>%
-    mutate(label_position = ifelse((freq - 0.02) > 0, freq - 0.02, freq)) %>%
+    mutate(label_position = ifelse((freq - 0.03) > 0, freq - 0.03, freq)) %>%
     as.data.frame()
   return(summary_df)
 }
@@ -18,7 +18,7 @@ nested_group_frequency <- function (df, grouping_var1, grouping_var2) {
     group_by_(grouping_var1, add = TRUE) %>%
     mutate(freq = N / groupN,
            label = paste(round(100 * N / groupN, 0), "%", sep="")) %>%
-    mutate(label_position = ifelse((freq - 0.02) > 0, freq - 0.02, freq)) %>%
+    mutate(label_position = ifelse((freq - 0.03) > 0, freq - 0.03, freq)) %>%
     as.data.frame()
   return(summary_df)
 }
@@ -34,8 +34,9 @@ plot_simple_bar_chart <- function (df, title) {
     ggtitle(title) +
     labs(x = "", y = "") +
     theme(axis.ticks = element_blank(),
-          axis.text = element_blank(),
-          plot.title = element_text(hjust = 0, size=12, color = md700$grey))
+          axis.text.x = element_blank(),
+          axis.text.y = element_text(color = md700$grey),
+          plot.title = element_text(hjust = 0, size=12, color = "black"))
   return(plot)
 }
 
