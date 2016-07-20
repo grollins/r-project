@@ -59,32 +59,27 @@ plot_bar_chart <- function (df, title) {
   return(plot)
 }
 
-plot_logistic_regression <- function (x, y1, y2, lower1, lower2, upper1, upper2,
-                                      x_to_label, y_to_label1,
-                                      y_to_label2, label1, label2) {
+plot_logistic_regression <- function (xy_list, xlabel = "", ylabel = "",
+                                      title=" ") {
+  xy <- xy_list[[1]]
+  print(xy)
   plot <- ggplot() +
-    geom_line(aes(x = x, y = y1), color = "#659564", size = 1.5) +
-    geom_ribbon(aes(x = x, ymin = lower1, ymax = upper1), fill = "#659564", alpha = 0.2) +
-    geom_line(aes(x = x, y = y2), color = "grey60", size = 1.5) +
-    geom_ribbon(aes(x = x, ymin = lower2, ymax = upper2), fill = "grey60", alpha = 0.2) +
-    geom_point(aes(x = x_to_label, y = y_to_label1), color = "#659564") +
-    geom_text(aes(x = x_to_label, y = y_to_label1, label = label1),
-              nudge_y = -0.05, color = "#659564", size = 4) +
-    geom_point(aes(x = x_to_label, y = y_to_label2), color = "grey60") +
-    geom_text(aes(x = x_to_label, y = y_to_label2, label = label2),
-              nudge_y = -0.05, color = "grey60", size = 4) +
-    # geom_jitter(aes(x = x, y = as.integer(y)),
-    #            width = 1.0, height = 0.05, color = "#659564", alpha = 0.25) +
-    labs(x = "X label", y = "Y label") +
-    scale_x_continuous(breaks = c(0, 7, 14, 21, 28)) +
-    scale_y_continuous(labels = scales::percent,
-                       breaks = c(0.0, 0.25, 0.5, 0.75, 1.0),
-                       limits = c(0, 1.1)) +
+    geom_line(aes(x = xy$x, y = xy$y), color = "#659564", size = 1.5) +
+    geom_ribbon(aes(x = xy$x, ymin = xy$lower, ymax = xy$upper),
+                fill = "#659564", alpha = 0.2) +
+    geom_point(aes(x = xy$x_to_label, y = xy$y_to_label), color = "#659564") +
+    geom_text(aes(x = xy$x_to_label, y = xy$y_to_label, label = xy$label),
+              nudge_y = label_nudge, color = "#659564", size = 4) +
+    labs(x = xlabel, y = ylabel) +
+    # scale_x_continuous(breaks = c(0, 7, 14, 21, 28)) +
+    scale_y_continuous(labels = scales::percent) +
+                       #breaks = c(0.0, 0.25, 0.5, 0.75, 1.0),
+                       #limits = c(0, 1.1)) +
     theme_minimal() +
-    ggtitle("Title") +
+    ggtitle(title) +
     theme(axis.text = element_text(size = 10, color = "grey60"),
           axis.title = element_text(size = 12, color = "grey60"),
           plot.title = element_text(hjust = 0, size=12, color = "grey30"))
-  
+
   return(plot)
 }
