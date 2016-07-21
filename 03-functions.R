@@ -59,27 +59,85 @@ plot_bar_chart <- function (df, title) {
   return(plot)
 }
 
-plot_logistic_regression <- function (xy_list, xlabel = "", ylabel = "",
-                                      title=" ") {
-  xy <- xy_list[[1]]
-  print(xy)
-  plot <- ggplot() +
-    geom_line(aes(x = xy$x, y = xy$y), color = "#659564", size = 1.5) +
-    geom_ribbon(aes(x = xy$x, ymin = xy$lower, ymax = xy$upper),
-                fill = "#659564", alpha = 0.2) +
-    geom_point(aes(x = xy$x_to_label, y = xy$y_to_label), color = "#659564") +
-    geom_text(aes(x = xy$x_to_label, y = xy$y_to_label, label = xy$label),
-              nudge_y = label_nudge, color = "#659564", size = 4) +
+plot_logistic_regression <-
+    function (xy_data, color_scheme, xlabel = "", ylabel = "", title=" ",
+              label_nudge) {
+  p <- ggplot(xy_data, aes(x, y, fill = name, label = label)) +
+    geom_line(aes(color = name), size = 1.5) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_point(aes(color = name), data = subset(xy_data, point_size > 0.0),
+               size = 2) +
+    geom_text(aes(color = name), size = 4, nudge_y = label_nudge,
+              show.legend = F) +
     labs(x = xlabel, y = ylabel) +
     # scale_x_continuous(breaks = c(0, 7, 14, 21, 28)) +
     scale_y_continuous(labels = scales::percent) +
                        #breaks = c(0.0, 0.25, 0.5, 0.75, 1.0),
                        #limits = c(0, 1.1)) +
-    theme_minimal() +
+    scale_color_manual(values = color_scheme) +
+    scale_fill_manual(values = color_scheme) +
+    theme_few() +
     ggtitle(title) +
     theme(axis.text = element_text(size = 10, color = "grey60"),
           axis.title = element_text(size = 12, color = "grey60"),
+          #legend.position="none",
           plot.title = element_text(hjust = 0, size=12, color = "grey30"))
+  return(p)
+}
 
-  return(plot)
+plot_logistic_regression_facet <-
+    function (xy_data, color_scheme, xlabel = "", ylabel = "", title=" ",
+              label_nudge) {
+  p <- ggplot(xy_data, aes(x, y, fill = name, label = label)) +
+    geom_line(aes(color = name), size = 1.5) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_point(aes(color = name), data = subset(xy_data, point_size > 0.0),
+               size = 2) +
+    geom_text(aes(color = name), size = 4, nudge_y = label_nudge,
+              show.legend = F) +
+    labs(x = xlabel, y = ylabel) +
+    # scale_x_continuous(breaks = c(0, 7, 14, 21, 28)) +
+    scale_y_continuous(labels = scales::percent) +
+                       #breaks = c(0.0, 0.25, 0.5, 0.75, 1.0),
+                       #limits = c(0, 1.1)) +
+    scale_color_manual(values = color_scheme) +
+    scale_fill_manual(values = color_scheme) +
+    theme_few() +
+    ggtitle(title) +
+    facet_wrap(~name, nrow = 1) +
+    theme(axis.text = element_text(size = 10, color = "grey60"),
+          axis.title = element_text(size = 12, color = "grey60"),
+          legend.position="none",
+          plot.title = element_text(hjust = 0, size=12, color = "grey30"))
+  return(p)
+}
+
+plot_logistic_regression_facet_with_repeat <-
+    function (xy_data, color_scheme, xlabel = "", ylabel = "", title=" ",
+              label_nudge) {
+  xy_data_no_name <- xy_data %>% mutate(name2 = name) %>% select(-name)
+  p <- ggplot(xy_data, aes(x, y, label = label)) +
+    geom_line(data = xy_data_no_name, mapping = aes(group = name2),
+              color = "grey85") +
+    geom_line(size = 1.5) +
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2) +
+    geom_point(data = subset(xy_data, point_size > 0.0),
+               size = 2) +
+    geom_text(size = 4, nudge_y = label_nudge,
+              show.legend = F) +
+    labs(x = xlabel, y = ylabel) +
+    # scale_x_continuous(breaks = c(0, 7, 14, 21, 28)) +
+    scale_y_continuous(labels = scales::percent) +
+                       #breaks = c(0.0, 0.25, 0.5, 0.75, 1.0),
+                       #limits = c(0, 1.1)) +
+    scale_color_manual(values = color_scheme) +
+    scale_fill_manual(values = color_scheme) +
+    theme_few() +
+    ggtitle(title) +
+    facet_wrap(~name, nrow = 1) +
+    theme(axis.text = element_text(size = 10, color = "grey60"),
+          axis.title = element_text(size = 12, color = "grey60"),
+          legend.position="none",
+          plot.title = element_text(hjust = 0, size=12, color = "grey30"))
+  return(p)
 }
